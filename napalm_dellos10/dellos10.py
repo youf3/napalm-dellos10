@@ -20,6 +20,7 @@ import re
 import socket
 import tempfile
 import uuid
+import base64
 
 try:
     from lxml import etree as ET
@@ -1599,8 +1600,8 @@ class DellOS10Driver(NetworkDriver):
                 for lldp_rem_info_data in lldp_neighbor.findall(
                         'lldp-rem-neighbor-info/info'):
                     rem_entry_dict = {}
-                    rem_inf_name = self.parse_item(lldp_rem_info_data,
-                                                   'rem-port-desc')
+                    rem_inf_name = str(base64.b64decode(self.parse_item(
+                        lldp_rem_info_data, 'rem-lldp-port-id')), 'utf-8')
                     rem_sys_name = self.parse_item(lldp_rem_info_data,
                                                    'rem-system-name')
                     if rem_inf_name:
@@ -1641,8 +1642,8 @@ class DellOS10Driver(NetworkDriver):
                 for lldp_rem_info_data in lldp_neighbor.findall(
                         'lldp-rem-neighbor-info/info'):
 
-                    remote_port = self.parse_item(lldp_rem_info_data,
-                                                  'rem-port-desc')
+                    remote_port = str(base64.b64decode(self.parse_item(
+                        lldp_rem_info_data, 'rem-lldp-port-id')), 'utf-8')
                     if not remote_port:
                         continue
 
@@ -1712,8 +1713,8 @@ class DellOS10Driver(NetworkDriver):
             for lldp_rem_info_data in lldp_neighbor.findall(
                     'lldp-rem-neighbor-info/info'):
 
-                remote_port = self.parse_item(lldp_rem_info_data,
-                                              'rem-port-desc')
+                remote_port = str(base64.b64decode(self.parse_item(
+                        lldp_rem_info_data, 'rem-lldp-port-id')), 'utf-8')
                 if not remote_port:
                     continue
 
