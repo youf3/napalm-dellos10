@@ -101,6 +101,7 @@ class DellOS10Driver(NetworkDriver):
             'alt_key_file': '',
             'ssh_config_file': None,
             'allow_agent': False,
+            'read_timeout_override': 60,
             'session_timeout': 90,
             'timeout': 120
         }
